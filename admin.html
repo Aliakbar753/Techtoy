@@ -1,0 +1,678 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel | TechToy</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .admin-wrap{max-width:960px;margin:40px auto;background:#fff;padding:24px;border-radius:12px;border:1px solid rgba(249,115,22,.16)}
+    .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:16px}
+    .head-actions{display:flex;align-items:center;gap:10px}
+    .row{margin-bottom:12px}
+    .row label{display:block;margin-bottom:6px;font-weight:600;color:#374151}
+    .row input,.row textarea,.row select{width:100%;padding:10px;border:1px solid #fdba74;border-radius:8px;font:inherit;background:#fffaf5;color:#1f2937}
+    .row input:focus,.row textarea:focus,.row select:focus{outline:2px solid rgba(249,115,22,.2);border-color:#f97316}
+    .field-error{min-height:18px;margin-top:4px;color:#b91c1c;font-size:13px}
+    .form-message{display:none;padding:10px 12px;border-radius:8px;margin:10px 0 14px}
+    .form-message.show{display:block}
+    .form-message.success{background:#ecfdf5;color:#047857;border:1px solid #6ee7b7}
+    .form-message.error{background:#fef2f2;color:#b91c1c;border:1px solid #fca5a5}
+    .form-actions{display:flex;gap:10px;align-items:center}
+    .products-admin{margin-top:28px}
+    .products-admin h3{margin-bottom:12px}
+    .admin-list{display:grid;gap:10px}
+    .admin-item{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;border:1px solid rgba(249,115,22,.22);border-radius:10px;padding:12px}
+    .admin-name{font-weight:700;color:#111827}
+    .admin-meta{color:#6b7280;font-size:14px}
+    .admin-buttons{display:flex;gap:8px}
+    .small-btn{border:none;border-radius:8px;padding:8px 12px;font-weight:600;cursor:pointer}
+    .edit-btn{background:#fff7ed;color:#c2410c}
+    .delete-btn{background:#fee2e2;color:#b91c1c}
+
+    .categories-admin{margin-top:22px;border:1px solid rgba(249,115,22,.18);border-radius:10px;padding:14px}
+    .categories-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+    .category-form{display:flex;gap:8px;flex-wrap:wrap}
+    .category-form input{flex:1;min-width:180px}
+    .category-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .category-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:#fff7ed;color:#9a3412;font-weight:600;font-size:13px}
+    .category-del{border:none;background:#fee2e2;color:#b91c1c;border-radius:999px;padding:2px 8px;cursor:pointer;font-size:12px;font-weight:700}
+    .category-msg{margin-top:8px;color:#6b7280;font-size:13px}
+    .analytics-grid{display:grid;grid-template-columns:repeat(5,minmax(120px,1fr));gap:10px;margin:14px 0 18px}
+    .analytics-card{border:1px solid rgba(249,115,22,.2);background:#fffaf5;border-radius:10px;padding:12px}
+    .analytics-label{font-size:12px;color:#6b7280;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+    .analytics-value{font-size:24px;font-weight:800;color:#111827;line-height:1.2;margin-top:4px}
+    .charts-grid{display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-bottom:16px}
+    .chart-card{border:1px solid rgba(249,115,22,.2);background:#fff;border-radius:10px;padding:12px}
+    .chart-title{font-size:14px;font-weight:700;color:#374151;margin-bottom:8px}
+    .chart-canvas-wrap{position:relative;min-height:260px}
+
+    @media (max-width:900px){.analytics-grid{grid-template-columns:repeat(2,minmax(120px,1fr))}}
+    @media (max-width:900px){.charts-grid{grid-template-columns:1fr}}
+    @media (max-width:760px){
+      .admin-wrap{margin:20px auto;padding:14px}
+      .head{flex-direction:column;align-items:flex-start}
+      .head-actions{width:100%;flex-wrap:wrap}
+      .form-actions{flex-direction:column;align-items:stretch}
+      #submitBtn,#cancelEditBtn{width:100%}
+      .category-form{flex-direction:column}
+      .category-form button{max-width:100% !important;width:100%}
+    }
+    @media (max-width:700px){.admin-item{grid-template-columns:1fr}.admin-buttons{justify-content:flex-start}}
+    @media (max-width:520px){.analytics-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="admin-wrap">
+    <div class="head">
+      <h2>Admin Panel</h2>
+      <div class="head-actions">
+        <a href="admin-orders.html" class="secondary-btn" style="text-decoration:none">Manage Orders</a>
+        <button id="logoutBtn" class="secondary-btn" type="button">Logout</button>
+      </div>
+    </div>
+
+    <section class="analytics-grid">
+      <article class="analytics-card">
+        <div class="analytics-label">Total Products</div>
+        <div id="statProducts" class="analytics-value">0</div>
+      </article>
+      <article class="analytics-card">
+        <div class="analytics-label">Total Orders</div>
+        <div id="statOrders" class="analytics-value">0</div>
+      </article>
+      <article class="analytics-card">
+        <div class="analytics-label">Pending Orders</div>
+        <div id="statPending" class="analytics-value">0</div>
+      </article>
+      <article class="analytics-card">
+        <div class="analytics-label">Low Stock</div>
+        <div id="statLowStock" class="analytics-value">0</div>
+      </article>
+      <article class="analytics-card">
+        <div class="analytics-label">Out of Stock</div>
+        <div id="statOutStock" class="analytics-value">0</div>
+      </article>
+    </section>
+
+    <section class="charts-grid">
+      <article class="chart-card">
+        <h3 class="chart-title">Sales (Last 7 Days)</h3>
+        <div class="chart-canvas-wrap">
+          <canvas id="salesChart"></canvas>
+        </div>
+      </article>
+      <article class="chart-card">
+        <h3 class="chart-title">Orders by Status</h3>
+        <div class="chart-canvas-wrap">
+          <canvas id="statusChart"></canvas>
+        </div>
+      </article>
+      <article class="chart-card" style="grid-column:1/-1">
+        <h3 class="chart-title">Top 5 Products Sold</h3>
+        <div class="chart-canvas-wrap">
+          <canvas id="topProductsChart"></canvas>
+        </div>
+      </article>
+    </section>
+
+    <section class="categories-admin">
+      <div class="categories-head">
+        <h3>Manage Categories</h3>
+      </div>
+
+      <form id="categoryForm" class="category-form">
+        <input id="categoryName" type="text" placeholder="Add category (e.g. Cameras)" />
+        <button class="checkout-btn" type="submit" style="max-width:180px">Add Category</button>
+      </form>
+
+      <div id="categoryList" class="category-list"></div>
+      <p id="categoryMsg" class="category-msg"></p>
+    </section>
+
+    <form id="adminForm" novalidate>
+      <input id="editingId" type="hidden" />
+
+      <div id="formMessage" class="form-message" role="status" aria-live="polite"></div>
+
+      <div class="row">
+        <label for="name">Product Name</label>
+        <input id="name" placeholder="Product name" />
+        <p id="nameErr" class="field-error"></p>
+      </div>
+
+      <div class="row">
+        <label for="desc">Description</label>
+        <textarea id="desc" placeholder="Description"></textarea>
+        <p id="descErr" class="field-error"></p>
+      </div>
+
+      <div class="row">
+        <label for="price">Price</label>
+        <input id="price" type="number" min="0" step="0.01" placeholder="Price" />
+        <p id="priceErr" class="field-error"></p>
+      </div>
+
+      <div class="row">
+        <label for="stock">Stock</label>
+        <input id="stock" type="number" min="0" step="1" placeholder="Stock quantity" />
+        <p id="stockErr" class="field-error"></p>
+      </div>
+
+      <div class="row">
+        <label for="image">Image Path</label>
+        <input id="image" placeholder="Image path e.g. images/new.jpg" />
+        <p id="imageErr" class="field-error"></p>
+      </div>
+
+      <div class="row">
+        <label for="category">Category</label>
+        <select id="category"></select>
+        <p id="categoryErr" class="field-error"></p>
+      </div>
+
+      <div class="form-actions">
+        <button id="submitBtn" class="checkout-btn" type="submit">Add Product</button>
+        <button id="cancelEditBtn" class="secondary-btn" type="button" style="display:none">Cancel Edit</button>
+      </div>
+    </form>
+
+    <section class="products-admin">
+      <h3>Manage Products</h3>
+      <div id="adminProductsList" class="admin-list"></div>
+    </section>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/product-store.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    if (!window.adminAuth.isLoggedIn()) window.location.href = "login.html";
+
+    window.productStore.ensureProductsSeeded();
+    window.productStore.ensureCategoriesSeeded();
+
+    const form = document.getElementById("adminForm");
+    const list = document.getElementById("adminProductsList");
+    const formMessage = document.getElementById("formMessage");
+    const editingId = document.getElementById("editingId");
+    const submitBtn = document.getElementById("submitBtn");
+    const cancelEditBtn = document.getElementById("cancelEditBtn");
+    const statProducts = document.getElementById("statProducts");
+    const statOrders = document.getElementById("statOrders");
+    const statPending = document.getElementById("statPending");
+    const statLowStock = document.getElementById("statLowStock");
+    const statOutStock = document.getElementById("statOutStock");
+    const salesCtx = document.getElementById("salesChart")?.getContext("2d");
+    const statusCtx = document.getElementById("statusChart")?.getContext("2d");
+    const topProductsCtx = document.getElementById("topProductsChart")?.getContext("2d");
+    let salesChart = null;
+    let statusChart = null;
+    let topProductsChart = null;
+
+    const categoryForm = document.getElementById("categoryForm");
+    const categoryNameInput = document.getElementById("categoryName");
+    const categoryList = document.getElementById("categoryList");
+    const categoryMsg = document.getElementById("categoryMsg");
+
+    const fields = {
+      name: document.getElementById("name"),
+      desc: document.getElementById("desc"),
+      price: document.getElementById("price"),
+      stock: document.getElementById("stock"),
+      image: document.getElementById("image"),
+      category: document.getElementById("category")
+    };
+
+    const errors = {
+      name: document.getElementById("nameErr"),
+      desc: document.getElementById("descErr"),
+      price: document.getElementById("priceErr"),
+      stock: document.getElementById("stockErr"),
+      image: document.getElementById("imageErr"),
+      category: document.getElementById("categoryErr")
+    };
+
+    function loadOrders() {
+      try {
+        const raw = localStorage.getItem("techtoy_orders");
+        const parsed = JSON.parse(raw || "[]");
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function renderAnalytics() {
+      const products = window.productStore.getProducts();
+      const orders = loadOrders();
+
+      const pendingOrders = orders.filter((order) => {
+        const status = String(order.status || "Placed");
+        return status === "Placed" || status === "Shipped";
+      }).length;
+
+      const lowStock = products.filter((p) => {
+        const stock = Number(p.stock) || 0;
+        return stock > 0 && stock <= 5;
+      }).length;
+
+      const outOfStock = products.filter((p) => (Number(p.stock) || 0) <= 0).length;
+
+      statProducts.textContent = String(products.length);
+      statOrders.textContent = String(orders.length);
+      statPending.textContent = String(pendingOrders);
+      statLowStock.textContent = String(lowStock);
+      statOutStock.textContent = String(outOfStock);
+      renderCharts(orders);
+    }
+
+    function getLast7DaysLabels() {
+      const labels = [];
+      const today = new Date();
+      for (let i = 6; i >= 0; i -= 1) {
+        const d = new Date(today);
+        d.setDate(today.getDate() - i);
+        labels.push(d.toLocaleDateString(undefined, { month: "short", day: "numeric" }));
+      }
+      return labels;
+    }
+
+    function getSalesByDay(orders) {
+      const today = new Date();
+      const keyToTotal = new Map();
+
+      for (let i = 0; i < 7; i += 1) {
+        const d = new Date(today);
+        d.setDate(today.getDate() - i);
+        const key = d.toISOString().slice(0, 10);
+        keyToTotal.set(key, 0);
+      }
+
+      orders.forEach((order) => {
+        const key = String(order.date || "").slice(0, 10);
+        if (!keyToTotal.has(key)) return;
+        keyToTotal.set(key, keyToTotal.get(key) + Number(order.total || 0));
+      });
+
+      const keys = [...keyToTotal.keys()].sort();
+      return keys.map((k) => Number(keyToTotal.get(k).toFixed(2)));
+    }
+
+    function getStatusCounts(orders) {
+      const counts = { Placed: 0, Shipped: 0, Delivered: 0, Cancelled: 0 };
+      orders.forEach((order) => {
+        const status = String(order.status || "Placed");
+        if (counts[status] !== undefined) counts[status] += 1;
+      });
+      return counts;
+    }
+
+    function getTopProducts(orders) {
+      const totals = new Map();
+      orders.forEach((order) => {
+        (order.items || []).forEach((item) => {
+          const name = item.name || "Product";
+          const qty = Number(item.qty || 0);
+          totals.set(name, (totals.get(name) || 0) + qty);
+        });
+      });
+
+      return [...totals.entries()]
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 5);
+    }
+
+    function renderCharts(orders) {
+      if (!window.Chart || !salesCtx || !statusCtx || !topProductsCtx) return;
+
+      const salesLabels = getLast7DaysLabels();
+      const salesData = getSalesByDay(orders);
+
+      if (salesChart) salesChart.destroy();
+      salesChart = new Chart(salesCtx, {
+        type: "line",
+        data: {
+          labels: salesLabels,
+          datasets: [{
+            label: "Sales ($)",
+            data: salesData,
+            borderColor: "#ea580c",
+            backgroundColor: "rgba(249,115,22,.2)",
+            fill: true,
+            tension: 0.3
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
+
+      const statusCounts = getStatusCounts(orders);
+      if (statusChart) statusChart.destroy();
+      statusChart = new Chart(statusCtx, {
+        type: "doughnut",
+        data: {
+          labels: Object.keys(statusCounts),
+          datasets: [{
+            data: Object.values(statusCounts),
+            backgroundColor: ["#fb923c", "#60a5fa", "#4ade80", "#f87171"]
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
+
+      const topProducts = getTopProducts(orders);
+      const topLabels = topProducts.map((entry) => entry[0]);
+      const topValues = topProducts.map((entry) => entry[1]);
+
+      if (topProductsChart) topProductsChart.destroy();
+      topProductsChart = new Chart(topProductsCtx, {
+        type: "bar",
+        data: {
+          labels: topLabels.length ? topLabels : ["No sales yet"],
+          datasets: [{
+            label: "Units Sold",
+            data: topValues.length ? topValues : [0],
+            backgroundColor: "#fb923c"
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          indexAxis: "y"
+        }
+      });
+    }
+
+    function formatCategoryLabel(category) {
+      return String(category || "")
+        .split(" ")
+        .filter(Boolean)
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(" ");
+    }
+
+    function showMessage(text, type) {
+      formMessage.textContent = text;
+      formMessage.className = `form-message show ${type}`;
+    }
+
+    function clearMessage() {
+      formMessage.textContent = "";
+      formMessage.className = "form-message";
+    }
+
+    function clearErrors() {
+      Object.values(errors).forEach((node) => node.textContent = "");
+    }
+
+    function setError(field, text) {
+      errors[field].textContent = text;
+    }
+
+    function showCategoryMessage(text, type = "") {
+      categoryMsg.textContent = text;
+      categoryMsg.style.color = type === "error" ? "#b91c1c" : type === "success" ? "#047857" : "#6b7280";
+    }
+
+    function renderCategoryOptions(selected = "") {
+      const categories = window.productStore.getCategories();
+      const options = ['<option value="">Select category</option>'];
+
+      categories.forEach((cat) => {
+        const isSelected = cat === selected ? "selected" : "";
+        options.push(`<option value="${cat}" ${isSelected}>${formatCategoryLabel(cat)}</option>`);
+      });
+
+      fields.category.innerHTML = options.join("");
+    }
+
+    function renderCategories() {
+      const categories = window.productStore.getCategories();
+
+      if (categories.length === 0) {
+        categoryList.innerHTML = "<p class='admin-meta'>No categories yet.</p>";
+        return;
+      }
+
+      categoryList.innerHTML = categories
+        .map((cat) => `
+          <span class="category-chip">
+            ${formatCategoryLabel(cat)}
+            <button type="button" class="category-del" data-category="${cat}" title="Delete category">x</button>
+          </span>
+        `)
+        .join("");
+    }
+
+    function resetForm() {
+      form.reset();
+      editingId.value = "";
+      submitBtn.textContent = "Add Product";
+      cancelEditBtn.style.display = "none";
+      fields.stock.value = "10";
+      renderCategoryOptions();
+      clearErrors();
+    }
+
+    function isDuplicateName(name, currentId) {
+      const all = window.productStore.getProducts();
+      return all.some((p) => p.name.toLowerCase() === name.toLowerCase() && p.id !== currentId);
+    }
+
+    function validateForm() {
+      clearErrors();
+      clearMessage();
+
+      const name = fields.name.value.trim();
+      const desc = fields.desc.value.trim();
+      const price = Number(fields.price.value);
+      const stock = Number(fields.stock.value);
+      const image = fields.image.value.trim();
+      const category = fields.category.value;
+      const currentId = editingId.value || null;
+      const availableCategories = window.productStore.getCategories();
+
+      let hasError = false;
+
+      if (name.length < 2) {
+        setError("name", "Name must be at least 2 characters.");
+        hasError = true;
+      }
+
+      if (isDuplicateName(name, currentId)) {
+        setError("name", "Product name already exists.");
+        hasError = true;
+      }
+
+      if (desc.length < 8) {
+        setError("desc", "Description must be at least 8 characters.");
+        hasError = true;
+      }
+
+      if (!Number.isFinite(price) || price <= 0) {
+        setError("price", "Price must be greater than 0.");
+        hasError = true;
+      }
+
+      if (!Number.isInteger(stock) || stock < 0) {
+        setError("stock", "Stock must be a whole number 0 or greater.");
+        hasError = true;
+      }
+
+      const validImage = image.startsWith("images/") || image.startsWith("http://") || image.startsWith("https://");
+      if (!validImage) {
+        setError("image", "Use path like images/file.jpg or full http(s) URL.");
+        hasError = true;
+      }
+
+      if (!category) {
+        setError("category", "Please select a category.");
+        hasError = true;
+      } else if (!availableCategories.includes(category)) {
+        setError("category", "Selected category is invalid. Please choose from the list.");
+        hasError = true;
+      }
+
+      if (hasError) return null;
+
+      return { name, desc, price, stock, image, category };
+    }
+
+    function renderProducts() {
+      const products = window.productStore.getProducts();
+
+      if (products.length === 0) {
+        list.innerHTML = "<p class='admin-meta'>No products found.</p>";
+        renderAnalytics();
+        return;
+      }
+
+      list.innerHTML = products.map((p) => `
+        <article class="admin-item">
+          <div>
+            <div class="admin-name">${p.name}</div>
+            <div class="admin-meta">$${Number(p.price).toFixed(2)} | ${formatCategoryLabel(p.category)}</div>
+            <div class="admin-meta">Stock: ${Number(p.stock) || 0}</div>
+            <div class="admin-meta">${p.image}</div>
+          </div>
+          <div class="admin-buttons">
+            <button type="button" class="small-btn edit-btn" data-action="edit" data-id="${p.id}">Edit</button>
+            <button type="button" class="small-btn delete-btn" data-action="delete" data-id="${p.id}">Delete</button>
+          </div>
+        </article>
+      `).join("");
+
+      renderAnalytics();
+    }
+
+    categoryForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const rawName = categoryNameInput.value.trim();
+      if (!rawName) {
+        showCategoryMessage("Enter category name first.", "error");
+        return;
+      }
+
+      const result = window.productStore.addCategory(rawName);
+      if (!result.ok) {
+        if (result.reason === "exists") showCategoryMessage("Category already exists.", "error");
+        else showCategoryMessage("Could not add category.", "error");
+        return;
+      }
+
+      categoryNameInput.value = "";
+      renderCategories();
+      renderCategoryOptions(fields.category.value);
+      showCategoryMessage("Category added.", "success");
+    });
+
+    categoryList.addEventListener("click", (e) => {
+      const btn = e.target.closest("button[data-category]");
+      if (!btn) return;
+
+      const category = btn.getAttribute("data-category");
+      const sure = confirm(`Delete category \"${formatCategoryLabel(category)}\"?`);
+      if (!sure) return;
+
+      const result = window.productStore.deleteCategory(category);
+      if (!result.ok) {
+        if (result.reason === "in-use") {
+          showCategoryMessage("Cannot delete category because products are using it.", "error");
+        } else {
+          showCategoryMessage("Could not delete category.", "error");
+        }
+        return;
+      }
+
+      const currentSelection = fields.category.value;
+      renderCategories();
+      renderCategoryOptions(currentSelection === category ? "" : currentSelection);
+      showCategoryMessage("Category deleted.", "success");
+    });
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const payload = validateForm();
+      if (!payload) {
+        showMessage("Please fix validation errors.", "error");
+        return;
+      }
+
+      if (editingId.value) {
+        const ok = window.productStore.updateProduct(editingId.value, payload);
+        if (!ok) {
+          showMessage("Could not update product.", "error");
+          return;
+        }
+        showMessage("Product updated successfully.", "success");
+      } else {
+        window.productStore.addProduct(payload);
+        showMessage("Product added successfully.", "success");
+      }
+
+      resetForm();
+      renderCategories();
+      renderProducts();
+    });
+
+    list.addEventListener("click", (e) => {
+      const btn = e.target.closest("button[data-action]");
+      if (!btn) return;
+
+      const productId = btn.getAttribute("data-id");
+      const action = btn.getAttribute("data-action");
+      const product = window.productStore.getProducts().find((p) => p.id === productId);
+      if (!product) return;
+
+      if (action === "edit") {
+        clearErrors();
+        clearMessage();
+
+        editingId.value = product.id;
+        fields.name.value = product.name || "";
+        fields.desc.value = product.desc || "";
+        fields.price.value = product.price ?? "";
+        fields.stock.value = Number(product.stock) || 0;
+        fields.image.value = product.image || "";
+        renderCategoryOptions(product.category || "");
+        submitBtn.textContent = "Update Product";
+        cancelEditBtn.style.display = "inline-block";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      if (action === "delete") {
+        const sure = confirm(`Delete ${product.name}?`);
+        if (!sure) return;
+
+        const ok = window.productStore.deleteProduct(product.id);
+        if (!ok) {
+          showMessage("Could not delete product.", "error");
+          return;
+        }
+
+        if (editingId.value === product.id) resetForm();
+        renderCategories();
+        renderProducts();
+        showMessage("Product deleted successfully.", "success");
+      }
+    });
+
+    cancelEditBtn.addEventListener("click", () => {
+      resetForm();
+      showMessage("Edit cancelled.", "success");
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      window.adminAuth.logout();
+      window.location.href = "login.html";
+    });
+
+    resetForm();
+    renderCategories();
+    renderProducts();
+    showCategoryMessage("Add categories, then use them in product form.");
+  </script>
+</body>
+</html>

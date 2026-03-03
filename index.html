@@ -1,0 +1,372 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TechToy | Modern Tech Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+                <!-- Promo Strip -->
+            <div class="promo-strip" id="promo-strip">
+            <p>Free shipping over $99</p>
+            <span>|</span>
+            <p>Easy returns</p>
+            <span>|</span>
+            <p>Secure checkout</p>
+            </div>
+
+    <!-- ================= NAVBAR ================= -->
+    <header class="navbar">
+        <div class="logo">Tech<span>Toy</span></div>
+        <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+       
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#promo-strip">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li class="nav-categories">
+                  <button class="nav-link-btn nav-categories-btn" type="button" aria-expanded="false">Categories</button>
+                  <div class="nav-categories-menu" role="menu" aria-label="Categories"></div>
+                </li>
+                <li><a href="orders.html">Orders</a></li>
+
+                 <form class="nav-search-form" action="products.html" method="get">
+          <input
+            class="nav-search-input"
+            type="search"
+            name="q"
+            placeholder="Search products"
+            aria-label="Search products"
+          >
+          <button class="nav-search-btn" type="submit">Search</button>
+        </form>
+
+
+                <li><button></button><a href="login.html">Store Login</a></li>
+                <li><div class="cart">
+                    &#128722;
+                    <span class="cart-count">0</span>
+                </div></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <!-- ================= HERO SECTION ================= -->
+<section class="hero">
+    <div class="hero-container">
+
+        <div class="hero-text">
+            <h1>Upgrade Your <span id="tech">Tech</span> Experience</h1>
+            <p>
+                Explore the latest smartphones, laptops, and smart gadgets
+                designed for performance and innovation.
+            </p>
+            <div class="hero-buttons">
+                <a href="products.html" class="btn primary-btn">Shop Now</a>
+                <a href="#" class="btn secondary-btn">Learn More</a>
+            </div>
+        </div>
+
+        <div class="hero-image">
+            <img loading="lazy" src="images/laptop-with-hard-disk-notebook (1).jpg" alt="Tech Products">
+        </div>
+
+    </div>
+</section>
+
+<!-- ================= CATEGORIES ================= -->
+<section class="categories" id="categories">
+    <h2 class="section-title">Shop by Category</h2>
+
+    <div class="category-container">
+
+      <div class="category-card" data-category="laptops">
+        <div class="category-icon">&#128187;</div>         <h3>Laptops</h3>
+        </div>
+
+        <div class="category-card" data-category="smartphones">
+        <div class="category-icon">&#128241;</div>         <h3>Smartphones</h3>
+        </div>
+
+        <div class="category-card" data-category="accessories">
+        <div class="category-icon">&#127911;</div>         <h3>Accessories</h3>
+        </div>
+
+        <div class="category-card" data-category="gadgets">
+        <div class="category-icon">&#8986;</div>         <h3>Smart Gadgets</h3>
+        </div>
+
+
+    </div>
+</section>
+
+
+<!-- ================= featured prodects ================= -->
+<!-- ================= featured products ================= -->
+<section class="featured-products">
+  <h2 class="section-title">Featured Products</h2>
+
+  <div class="products-flex">
+    <div class="product-card" data-category="laptops" data-id="p1">
+      <img src="images/laptop.jpg" alt="Ultra Laptop X">
+      <h3>Ultra Laptop X</h3>
+      <p class="product-desc">Powerful performance for work and gaming.</p>
+      <div class="rating"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="rating-value">4.8</span></div>
+      <p class="price">$899</p>
+      <button type="button" class="add-btn">Add to Cart</button>
+    </div>
+
+    <div class="product-card" data-category="smartphones" data-id="p2">
+      <img src="images/iphone.webp" alt="Iphone 17 Pro">
+      <h3>Iphone 17 Pro</h3>
+      <p class="product-desc">Fast and sleek for all-day use.</p>
+      <div class="rating"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="rating-value">4.7</span></div>
+      <p class="price">$699</p>
+      <button type="button" class="add-btn">Add to Cart</button>
+    </div>
+
+    <div class="product-card" data-category="accessories" data-id="p3">
+      <img src="images/headphone.jpg" alt="Wireless Headset Max">
+      <h3>Wireless Headset Max</h3>
+      <p class="product-desc">Immersive sound and long battery.</p>
+      <div class="rating"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="rating-value">4.6</span></div>
+      <p class="price">$149</p>
+      <button type="button" class="add-btn">Add to Cart</button>
+    </div>
+
+    <div class="product-card" data-category="gadgets" data-id="p4">
+      <img src="images/smartwatch.jpg" alt="Smart Watch Neo">
+      <h3>Smart Watch Neo</h3>
+      <p class="product-desc">Track fitness and notifications easily.</p>
+      <div class="rating"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="rating-value">4.5</span></div>
+      <p class="price">$199</p>
+      <button type="button" class="add-btn">Add to Cart</button>
+    </div>
+
+    <div class="product-card" data-category="accessories" data-id="p5">
+      <img src="images/blutoothspeakermini.webp" alt="Bluetooth Speaker Mini">
+      <h3>Bluetooth Speaker Mini</h3>
+      <p class="product-desc">Clear audio in a compact design.</p>
+      <div class="rating"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="rating-value">4.4</span></div>
+      <p class="price">$89</p>
+      <button type="button" class="add-btn">Add to Cart</button>
+    </div>
+
+    <div class="product-card" data-category="accessories" data-id="p6">
+      <img src="images/gamingmouse.webp" alt="Gaming Mouse Pro">
+      <h3>Gaming Mouse Pro</h3>
+      <p class="product-desc">Precise control with RGB lighting.</p>
+      <div class="rating"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="rating-value">4.6</span></div>
+      <p class="price">$59</p>
+      <button type="button" class="add-btn">Add to Cart</button>
+    </div>
+
+    <div class="product-card" data-category="accessories" data-id="p7">
+      <img src="images/keyboard.avif" alt="Mechanical Keyboard K8">
+      <h3>Mechanical Keyboard K8</h3>
+      <p class="product-desc">Comfortable typing with tactile keys.</p>
+      <div class="rating"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="rating-value">4.7</span></div>
+      <p class="price">$129</p>
+      <button type="button" class="add-btn">Add to Cart</button>
+    </div>
+
+    <div class="product-card" data-category="gadgets" data-id="p8">
+      <img src="images/tablet.webp" alt="Tablet Air 10">
+      <h3>Tablet Air 10</h3>
+      <p class="product-desc">Lightweight tablet for work and media.</p>
+      <div class="rating"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="rating-value">4.5</span></div>
+      <p class="price">$399</p>
+      <button type="button" class="add-btn">Add to Cart</button>
+    </div>
+  </div>
+</section>
+
+
+<div class="featured-cta">
+  <a href="products.html" class="cta-btn primary-cta">View All Products</a>
+  <a href="orders.html" class="cta-btn secondary-cta">Track My Orders</a>
+</div>
+
+
+<!-- ================= WHY CHOOSE US ================= -->
+<section class="why-choose-us">
+  <h2 class="section-title">Why Choose Us</h2>
+
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon">&#128666;</div>       <h3>Fast Delivery</h3>
+      <p>Get your tech products delivered quickly and safely at your doorstep.</p>
+    </div>
+
+    <div class="why-card">
+      <div class="why-icon">&#10004;</div>       <h3>Genuine Products</h3>
+      <p>We guarantee 100% original items from trusted brands and suppliers.</p>
+    </div>
+
+    <div class="why-card">
+      <div class="why-icon">&#127911;</div>       <h3>24/7 Support</h3>
+      <p>Our support team is available anytime to help with orders and issues.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TESTIMONIALS ================= -->
+<section class="testimonials">
+  <h2 class="section-title">What Customers Say</h2>
+
+  <div class="testimonial-grid">
+    <div class="testimonial-card">
+      <p>"Great quality products and very fast delivery. Highly recommended!"</p>
+      <h4>Hassan Ali</h4>
+      <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+    </div>
+
+    <div class="testimonial-card">
+      <p>"The cart and checkout were smooth. Support team helped me instantly."</p>
+      <h4>Hussain Ali</h4>
+      <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+    </div>
+
+    <div class="testimonial-card">
+      <p>"I ordered a laptop and accessories. Everything was genuine and packed well."</p>
+      <h4>Abu Bakar</h4>
+      <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT US ================= -->
+<section class="contact-us" id="contact-us">
+  <h2 class="section-title">Contact Us</h2>
+  <p class="contact-subtitle">Have a question about products or orders? Send us a message.</p>
+
+  <form id="contactForm" class="contact-form">
+    <div class="contact-grid">
+      <div class="contact-field">
+        <label for="contactName">Full Name</label>
+        <input id="contactName" name="name" type="text" placeholder="Enter your name" required>
+      </div>
+      <div class="contact-field">
+        <label for="contactEmail">Email</label>
+        <input id="contactEmail" name="email" type="email" placeholder="Enter your email" required>
+      </div>
+    </div>
+
+    <div class="contact-field">
+      <label for="contactSubject">Subject</label>
+      <input id="contactSubject" name="subject" type="text" placeholder="Enter subject" required>
+    </div>
+
+    <div class="contact-field">
+      <label for="contactMessage">Message</label>
+      <textarea id="contactMessage" name="message" rows="5" placeholder="Write your message" required></textarea>
+    </div>
+
+    <button class="contact-submit" type="submit">Send Message</button>
+    <p id="contactStatus" class="contact-status" role="status" aria-live="polite"></p>
+  </form>
+</section>
+
+
+<!-- ================= CART OVERLAY + SIDEBAR ================= -->
+<div class="cart-overlay"></div>
+
+<div class="cart-sidebar">
+  <div class="cart-header">
+    <h2>Your Cart</h2>
+    <span class="close-cart">&times;</span>
+  </div>
+
+  <div class="cart-items"></div>
+
+  <div class="cart-footer">
+    <h3>Total: <span class="cart-total">$0.00</span></h3>
+     <button class="checkout-btn" type="button">Checkout</button>
+  </div>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <h3>TechToy</h3>
+      <p>Your trusted store for modern tech gadgets and accessories.</p>
+    </div>
+
+    <div>
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="orders.html">My Orders</a></li>
+        <li><a href="#contact-us">Contact Us</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>Contact</h4>
+      <p>Email: support@techtoy.com</p>
+      <p>Phone: +923193080026</p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2026 TechToy. All rights reserved.</p>
+  </div>
+</footer>
+
+<nav class="mobile-bottom-nav" aria-label="Mobile quick navigation">
+  <a class="mobile-nav-item is-active" href="index.html">
+    <span class="mobile-nav-icon-wrap"><span class="mobile-nav-icon">&#127968;</span></span>
+    <span>Home</span>
+  </a>
+  <a class="mobile-nav-item" href="orders.html">
+    <span class="mobile-nav-icon-wrap"><span class="mobile-nav-icon">&#128276;</span></span>
+    <span>Notifications</span>
+  </a>
+  <button class="mobile-nav-item mobile-categories-link" type="button" aria-label="Open categories">
+    <span class="mobile-nav-icon-wrap"><span class="mobile-nav-icon">&#128193;</span></span>
+    <span>Categories</span>
+  </button>
+  <button class="mobile-nav-item mobile-cart-link" type="button" aria-label="Open cart">
+    <span class="mobile-nav-icon-wrap">
+      <span class="mobile-nav-icon">&#128722;</span>
+      <span class="mobile-cart-count">0</span>
+    </span>
+    <span>Cart</span>
+  </button>
+  <a class="mobile-nav-item" href="login.html">
+    <span class="mobile-nav-icon-wrap"><span class="mobile-nav-icon">&#128100;</span></span>
+    <span>Account</span>
+  </a>
+</nav>
+
+<script src="js/product-store.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
+
+
+
+
+
+

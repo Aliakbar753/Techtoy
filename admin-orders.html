@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Orders | TechToy</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/orders.css" />
+  <link rel="stylesheet" href="css/admin-orders.css" />
+</head>
+<body>
+  <main class="orders-wrap">
+    <div class="orders-head">
+      <h1>Manage Orders</h1>
+      <div class="orders-head-actions">
+        <a href="admin.html" class="back-home">Back to Admin</a>
+        <button id="logoutBtn" class="secondary-btn" type="button">Logout</button>
+      </div>
+    </div>
+
+    <section class="admin-orders-controls">
+      <label for="statusFilter">Filter by status</label>
+      <select id="statusFilter">
+        <option value="all">All</option>
+        <option value="Placed">Placed</option>
+        <option value="Shipped">Shipped</option>
+        <option value="Delivered">Delivered</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
+      <input
+        id="orderSearch"
+        type="search"
+        placeholder="Search by order ID, customer name, or email"
+        aria-label="Search orders"
+      />
+      <button id="exportCsvBtn" class="secondary-btn" type="button">Export CSV</button>
+    </section>
+
+    <div id="ordersList" class="orders-list"></div>
+  </main>
+
+  <script src="js/auth.js"></script>
+  <script src="js/admin-orders.js"></script>
+</body>
+</html>

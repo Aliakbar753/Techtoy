@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All Products | TechToy</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/nav.js" defer></script>
+  <script src="js/product-store.js" defer></script>
+  <script src="js/products.js" defer></script>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">Tech<span>Toy</span></div>
+    <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <form class="nav-search-form" action="products.html" method="get">
+      <input
+        class="nav-search-input"
+        type="search"
+        name="q"
+        placeholder="Search products"
+        aria-label="Search products"
+      />
+      <button class="nav-search-btn" type="submit">Search</button>
+    </form>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li class="nav-categories">
+          <button class="nav-link-btn nav-categories-btn" type="button" aria-expanded="false">Categories</button>
+          <div class="nav-categories-menu" role="menu" aria-label="Categories"></div>
+        </li>
+        <li><a href="checkout.html">Checkout</a></li>
+        <li><a href="orders.html">Orders</a></li>
+        <li><a href="login.html">Store Login</a></li>
+        <li><div class="cart">
+                    &#128722;
+                    <span class="cart-count">0</span></div></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="featured-products">
+    <h2 class="section-title">All Products</h2>
+    <div class="products-toolbar">
+      <input id="searchInput" class="products-search" type="text" placeholder="Search products..." />
+      <select id="sortSelect" class="products-sort">
+        <option value="default">Sort: Default</option>
+        <option value="name-asc">Name: A to Z</option>
+        <option value="name-desc">Name: Z to A</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+      </select>
+    </div>
+    <div id="productsGrid" class="products-flex"></div>
+    <p id="productsEmptyState" class="products-empty" hidden>No products match your search.</p>
+
+    <div class="featured-cta">
+      <a href="checkout.html" class="cta-btn primary-cta">Go To Checkout</a>
+      <a href="index.html" class="cta-btn secondary-cta">Back To Home</a>
+    </div>
+  </section>
+
+  <div class="cart-overlay"></div>
+  <div class="cart-sidebar">
+    <div class="cart-header">
+      <h2>Your Cart</h2>
+      <span class="close-cart">&times;</span>
+    </div>
+    <div class="cart-items"></div>
+    <div class="cart-footer">
+      <h3>Total: <span class="cart-total">$0.00</span></h3>
+      <button class="checkout-btn" type="button">Checkout</button>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div>
+        <h3>TechToy</h3>
+        <p>Your trusted store for modern tech gadgets and accessories.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="orders.html">My Orders</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Returns</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p>Email: support@techtoy.com</p>
+        <p>Phone: +923193080026</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 TechToy. All rights reserved.</p>
+    </div>
+  </footer>
+  <nav class="mobile-bottom-nav" aria-label="Mobile quick navigation">
+  <a class="mobile-nav-item" href="index.html">
+    <span class="mobile-nav-icon-wrap"><span class="mobile-nav-icon">&#127968;</span></span>
+    <span>Home</span>
+  </a>
+  <a class="mobile-nav-item" href="orders.html">
+    <span class="mobile-nav-icon-wrap"><span class="mobile-nav-icon">&#128276;</span></span>
+    <span>Notifications</span>
+  </a>
+  <button class="mobile-nav-item mobile-categories-link is-active" type="button" aria-label="Open categories">
+    <span class="mobile-nav-icon-wrap"><span class="mobile-nav-icon">&#128193;</span></span>
+    <span>Categories</span>
+  </button>
+  <button class="mobile-nav-item mobile-cart-link" type="button" aria-label="Open cart">
+    <span class="mobile-nav-icon-wrap">
+      <span class="mobile-nav-icon">&#128722;</span>
+      <span class="mobile-cart-count">0</span>
+    </span>
+    <span>Cart</span>
+  </button>
+  <a class="mobile-nav-item" href="login.html">
+    <span class="mobile-nav-icon-wrap"><span class="mobile-nav-icon">&#128100;</span></span>
+    <span>Account</span>
+  </a>
+</nav>
+  <script src="js/cart-shared.js" defer></script>
+</body>
+</html>
+
+
